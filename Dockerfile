@@ -1,7 +1,7 @@
 # Sample Dockerfile for installing MongoDB on an Ubuntu 14.04 server
 # https://github.com/atbaker/mongo-example
 
-# Use the Trusty base image
+# Use the Trusty (14.04) Ubuntu base image
 FROM ubuntu:14.04
 
 # Optionally set the maintainer
@@ -21,10 +21,11 @@ RUN apt-get update
 # Install the latest stable version of MongoDB (note -y flag for non-interactive)
 RUN apt-get install -y mongodb-org
 
-# Create MongoDB's default data directory
+# Create MongoDB's default data directory (-p creates parent directories - in this case, /data)
 RUN mkdir -p /data/db
 
-# Because this database will run in a Docker container, we need it to accept connctions from foreign hosts
+# Because this database will run in a Docker container, 
+# we must configure it to accept connctions from foreign hosts
 RUN echo "bind_ip = 0.0.0.0" >> /etc/mongodb.conf
 
 # Expose the MongoDB port
